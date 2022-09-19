@@ -180,41 +180,50 @@
 
 # Задача 4. Реализуйте RLE алгоритм: реализуйте модуль сжатия и восстановления данных.
 
-
-with open('RLE1_decoded.txt', 'r') as data:
-    my_text = data.read()
-
-def encode_rle(ss):
+def encode_file(my_text):  
     str_code = ''
-    prev_char = ''
-    count = 1
-    for char in ss:
-        if char != prev_char:
-            if prev_char:
-                str_code += str(count) + prev_char
-            count = 1
-            prev_char = char
+    count = 1       
+    for i in range(len(my_text)):
+        if i < len(my_text)-1:
+            if my_text[i] == my_text[i + 1]:
+                count += 1
+            else:
+                str_code += str(count) + my_text[i]
+                count = 1
         else:
-            count += 1
+            str_code += str(count) + my_text[i]
     return str_code
 
-            
-str_code = encode_rle(my_text)
-print(str_code)
-
-with open('RLE2_encoded.txt', 'r') as data:
-    my_text2 = data.read()
-
-def decoding_rle(ss:str):
+def decode_file(strc):
     count = ''
-    str_decode = ''
-    for char in ss:
-        if char.isdigit():
-            count += char 
+    result = ''
+    for i in strc:
+        if i.isdigit():
+            count += i
         else:
-            str_decode += char * int(count)
+            result += i * int(count)
             count = ''
-    return str_decode
+    return result
 
-str_decode = decoding_rle(my_text2)
-print(str_decode)
+text = 'MMMMfffGGGHHHHCCCKKKDDDDqqqq'
+print(f'Введён следующий текст: \n{text}')
+with open('5_decode.txt', 'w') as data:
+    data.write(text)
+
+with open('5_decode.txt', 'r') as data:
+    my_text = data.read()
+
+strc = encode_file(my_text)
+print(f'Сжатый текст: \n{strc}') 
+
+with open('5_code2.txt', 'w') as data:
+    data.write(strc)
+
+with open('5_code2.txt', 'r') as data:
+    my_text = data.read()
+
+total = decode_file(my_text)
+print(f'Восстановленный текст: \n{total}') 
+
+with open('5_decode.txt', 'w') as data:
+    data.write(total)
