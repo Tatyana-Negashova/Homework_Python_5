@@ -7,7 +7,7 @@
 # with open('incoming_text.txt','r') as file:
 #     my_text = file.readline()
 #     change_text = my_text.split()
-# del_text = input('Введите  набор букв, который нужно удалить из слов содержащие данную последовательность :  ')
+# del_text = input('Введите  набор букв, который нужно удалить:  ')
 # result = ' '.join(filter(lambda x: del_text not in x, change_text))
 # with open('format_text.txt','w') as file:
 #     file.write(f'{result}')
@@ -26,94 +26,80 @@
 
 # b) Подумайте как наделить бота ""интеллектом"". Напоминаю, если перед пользователем будет лежать 29 конфет, 
 # то он, однозначно, проиграет. Достаточно довести игру до такой ситуации.
-
+# **********************
+# Человек против человека
 # from random import randint
 
-# def input_dat(name):
-#     x = int(input(f"{name}, введите количество конфет, которое возьмете от 1 до 28: "))
-#     while x < 1 or x > 28:
-#         x = int(input(f"{name}, введите корректное количество конфет: "))
-#     return x
-
-
-# def p_print(name, k, counter, value):
-#     print(f"Ходил {name}, он взял {k}, теперь у него {counter}. Осталось на столе {value} конфет.")
-
-# player1 = input("Введите имя первого игрока: ")
-# player2 = input("Введите имя второго игрока: ")
-# value = int(input("Введите количество конфет на столе: "))
-# flag = randint(0,2) # 
-
+# candies = int(input('Введите общее количество конфет в игре: '))
+# gamer1 = input('Введите имя первого игрока: ')
+# gamer2 = input('Введите имя второго игрока: ')
+# flag = randint(0, 2)
 # if flag:
-#     print(f"Первый ходит {player1}")
+#     print(f'Первый ход у {gamer1}')
 # else:
-#     print(f"Первый ходит {player2}")
+#     print(f'Первый ход у {gamer2}')
 
-# counter1 = 0 
-# counter2 = 0
-
-# while value > 28:
-#     if flag:
-#         k = input_dat(player1)
-#         counter1 += k
-#         value -= k
-#         flag = False
-#         p_print(player1, k, counter1, value)
+# def step_check(name):
+#     number = int(input(f'{name}, введите количество конфет в диапазоне от 1 до 28: '))
+#     if 1 <= number <= 28:
+#         return number
 #     else:
-#         k = input_dat(player2)
-#         counter2 += k
-#         value -= k
-#         flag = True
-#         p_print(player2, k, counter2, value)
+#         number = int(input("Необходимо взять конфеты в диапазоне от 1 до 28 шт.: "))
+#         return number
 
+# def step_print(name, numb, candy):
+#     print(f'{name} взял {numb} конфет. В куче осталось {candy} конфет')
+
+
+# while candies > 0:
+#     if flag:
+#         num = step_check(gamer1)
+#         candies -= num
+#         flag = False
+#         step_print(gamer1, num, candies)
+#     else:
+#         num = step_check(gamer2)
+#         candies -= num
+#         flag = True
+#         step_print(gamer2, num, candies)
 # if flag:
-#     print(f"Выиграл {player1}")
+#     print(f'Выиграл {gamer2}')
 # else:
-#     print(f"Выиграл {player2}")
+#     print(f'Выиграл {gamer1}')
+
 
 #a) Добавьте игру против бота. Достаточно сделать так, чтобы бот не брал конфет больше положенного или больше чем имеется в куче.
 # from random import randint
 
-# def input_dat(name):
-#     x = int(input(f"{name}, введите количество конфет, которое возьмете от 1 до 28: "))
-#     while x < 1 or x > 28:
-#         x = int(input(f"{name}, введите корректное количество конфет: "))
-#     return x
+# вариант человека против бота:
+#
+# from random import randint
 
-
-# def p_print(name, k, counter, value):
-#     print(f"Ходил {name}, он взял {k}, теперь у него {counter}. Осталось на столе {value} конфет.")
-
-# player1 = input("Введите имя первого игрока: ")
-# player2 = "Bot"
-# value = int(input("Введите количество конфет на столе: "))
-# flag = randint(0,2) # флаг очередности
-# if flag:
-#     print(f"Первый ходит {player1}")
-# else:
-#     print(f"Первый ходит {player2}")
-
-# counter1 = 0 
-# counter2 = 0
-
-# while value > 28:
-#     if flag:
-#         k = input_dat(player1)
-#         counter1 += k
-#         value -= k
-#         flag = False
-#         p_print(player1, k, counter1, value)
+# candies = 2021
+# print(f'Игра против бота, на столе {candies} конфет.Выигрывает тот,кто забирает последние конфеты')
+# step = randint(0, 2)
+# while candies > 0:
+#     if step:
+#         if candies > 28:
+#             bot = randint(0, 29)
+#         else:
+#             bot = randint(0, candies)
+#         candies -= bot
+#         print(f'Бот взял {bot} конфет, на столе осталось {candies}')
+#         step = False
 #     else:
-#         k = randint(1,29)
-#         counter2 += k
-#         value -= k
-#         flag = True
-#         p_print(player2, k, counter2, value)
-
-# if flag:
-#     print(f"Выиграл {player1}")
+#         people = int(input('Сколько конфет берёте от 1 до 28? \n'))
+#         if 1 <= people <= 28:
+#             candies -= people
+#             print(f'На столе осталось {candies} конфет')
+#             step = True
+#         else:
+#             people = int(input('Введите количество от 1 до 28: '))
+# if step:
+#     print('Вы победили!')
 # else:
-#     print(f"Выиграл {player2}")
+#     print('Вы проиграли. Победил Бот.')
+
 
 
 # 3. Задача Создайте программу для игры в ""Крестики-нолики"".
@@ -180,50 +166,50 @@
 
 # Задача 4. Реализуйте RLE алгоритм: реализуйте модуль сжатия и восстановления данных.
 
-def encode_file(my_text):  
-    str_code = ''
-    count = 1       
-    for i in range(len(my_text)):
-        if i < len(my_text)-1:
-            if my_text[i] == my_text[i + 1]:
-                count += 1
-            else:
-                str_code += str(count) + my_text[i]
-                count = 1
-        else:
-            str_code += str(count) + my_text[i]
-    return str_code
+# def encode_file(my_text):  
+#     str_code = ''
+#     count = 1       
+#     for i in range(len(my_text)):
+#         if i < len(my_text)-1:
+#             if my_text[i] == my_text[i + 1]:
+#                 count += 1
+#             else:
+#                 str_code += str(count) + my_text[i]
+#                 count = 1
+#         else:
+#             str_code += str(count) + my_text[i]
+#     return str_code
 
-def decode_file(strc):
-    count = ''
-    result = ''
-    for i in strc:
-        if i.isdigit():
-            count += i
-        else:
-            result += i * int(count)
-            count = ''
-    return result
+# def decode_file(strc):
+#     count = ''
+#     result = ''
+#     for i in strc:
+#         if i.isdigit():
+#             count += i
+#         else:
+#             result += i * int(count)
+#             count = ''
+#     return result
 
-text = 'MMMMfffGGGHHHHCCCKKKDDDDqqqq'
-print(f'Введён следующий текст: \n{text}')
-with open('5_decode.txt', 'w') as data:
-    data.write(text)
+# text = 'MMMMfffGGGHHHHCCCKKKDDDDqqqq'
+# print(f'Введён следующий текст: \n{text}')
+# with open('5_decode.txt', 'w') as data:
+#     data.write(text)
 
-with open('5_decode.txt', 'r') as data:
-    my_text = data.read()
+# with open('5_decode.txt', 'r') as data:
+#     my_text = data.read()
 
-strc = encode_file(my_text)
-print(f'Сжатый текст: \n{strc}') 
+# strc = encode_file(my_text)
+# print(f'Сжатый текст: \n{strc}') 
 
-with open('5_code2.txt', 'w') as data:
-    data.write(strc)
+# with open('5_code2.txt', 'w') as data:
+#     data.write(strc)
 
-with open('5_code2.txt', 'r') as data:
-    my_text = data.read()
+# with open('5_code2.txt', 'r') as data:
+#     my_text = data.read()
 
-total = decode_file(my_text)
-print(f'Восстановленный текст: \n{total}') 
+# total = decode_file(my_text)
+# print(f'Восстановленный текст: \n{total}') 
 
-with open('5_decode.txt', 'w') as data:
-    data.write(total)
+# with open('5_decode.txt', 'w') as data:
+#     data.write(total)
