@@ -100,7 +100,50 @@
 # else:
 #     print('Вы проиграли. Победил Бот.')
 
+#*********************************
+# вариант игры с интеллектуальным ботом
+# from random import randint
 
+# def input_dat(name):
+#     x = int(input(f"{name}, введите количество конфет, которое возьмете от 1 до 28: "))
+#     while x < 1 or x > 28:
+#         x = int(input(f"{name}, введите корректное количество конфет: "))
+#     return x
+# def p_print(name, k, counter, value):
+#     print(f"Ходил {name}, он взял {k}, теперь у него {counter}. Осталось на столе {value} конфет.")
+# def bot_calc(value):
+#     k = randint(1,29)
+#     while value-k <= 28 and value > 29:
+#         k = randint(1,29)
+#     return k
+# player1 = input("Введите имя первого игрока: ")
+# player2 = "Bot"
+# value = int(input("Введите количество конфет на столе: "))
+# flag = randint(0,2) # флаг очередности
+# if flag:
+#     print(f"Первый ходит {player1}")
+# else:
+#     print(f"Первый ходит {player2}")
+# counter1 = 0 
+# counter2 = 0
+# while value > 28:
+#     if flag:
+#         k = input_dat(player1)
+#         counter1 += k
+#         value -= k
+#         flag = False
+#         p_print(player1, k, counter1, value)
+#     else:
+#         k = bot_calc(value)
+#         counter2 += k
+#         value -= k
+#         flag = True
+#         p_print(player2, k, counter2, value)
+
+# if flag:
+#     print(f"Выиграл {player1}")
+# else:
+#     print(f"Выиграл {player2}")
 
 # 3. Задача Создайте программу для игры в ""Крестики-нолики"".
 
@@ -166,50 +209,35 @@
 
 # Задача 4. Реализуйте RLE алгоритм: реализуйте модуль сжатия и восстановления данных.
 
-# def encode_file(my_text):  
-#     str_code = ''
-#     count = 1       
-#     for i in range(len(my_text)):
-#         if i < len(my_text)-1:
-#             if my_text[i] == my_text[i + 1]:
-#                 count += 1
-#             else:
-#                 str_code += str(count) + my_text[i]
-#                 count = 1
-#         else:
-#             str_code += str(count) + my_text[i]
-#     return str_code
+with open('file_encode.txt', 'w') as data:
+    data.write('NNNNbbbHHHHLLLLpppjjhh')
+def coding(text):
+    count = 1
+    res = ''
+    for i in range(len(text)-1):
+        if text[i] == text[i+1]:
+            count += 1
+        else:
+            res = res + str(count) + text[i]
+            count = 1
+    if count > 1 or (text[len(text)-2] != text[-1]):
+        res = res + str(count) + text[-1]
+    return res
+def decoding(txt):
+    number = ''
+    res = ''
+    for i in range(len(txt)):
+        if not txt[i].isalpha():
+            number += txt[i]
+        else:
+            res = res + txt[i] * int(number)
+            number = ''
+    return res
+with open('file_encode.txt', 'r') as file:
+    decoded_string = file.read()
+with open('file_decode.txt', 'w') as file:
+    encoded_string = coding(decoded_string)
+    file.write(encoded_string)
 
-# def decode_file(strc):
-#     count = ''
-#     result = ''
-#     for i in strc:
-#         if i.isdigit():
-#             count += i
-#         else:
-#             result += i * int(count)
-#             count = ''
-#     return result
-
-# text = 'MMMMfffGGGHHHHCCCKKKDDDDqqqq'
-# print(f'Введён следующий текст: \n{text}')
-# with open('5_decode.txt', 'w') as data:
-#     data.write(text)
-
-# with open('5_decode.txt', 'r') as data:
-#     my_text = data.read()
-
-# strc = encode_file(my_text)
-# print(f'Сжатый текст: \n{strc}') 
-
-# with open('5_code2.txt', 'w') as data:
-#     data.write(strc)
-
-# with open('5_code2.txt', 'r') as data:
-#     my_text = data.read()
-
-# total = decode_file(my_text)
-# print(f'Восстановленный текст: \n{total}') 
-
-# with open('5_decode.txt', 'w') as data:
-#     data.write(total)
+print(f"Текст после кодировки: {coding(decoded_string)}")
+print(f"Текст после дешифровки: {decoding(coding(decoded_string))}")
